@@ -14,10 +14,10 @@
         #output {
             background: rgb(188, 228, 226);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 0px;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
             display: inline-block;
-            text-align: left;
+            text-align: center;
         }
         h1 {
             color: #00e6ad;
@@ -35,7 +35,6 @@
         fetch("dadesobertes_pg.json")
             .then(response => response.json())
             .then(data => {
-                let output = "<h2>Predicció</h2>";
                 
                 data.forEach(prediccio => {
                     output += `
