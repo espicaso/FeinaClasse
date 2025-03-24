@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsió Meteorològica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+        #output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+        h1 {
+            color: #0073e6;
+        }
+        h2 {
+            color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Previsió Meteorològica</h1>
+    <div id="output">Carregant dades...</div>
+    
+    <script>
+        fetch("sdadesobertes_pg.json")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("output").innerHTML = `
+                <h2>Dades Previsió Meteorològica</h2>
+                <p><strong>Estat del cel:</strong> ${data[0].versio.variables.estatDelCel}</p>
+                <p><strong>Precipitacions:</strong> ${data[0].versio.variables.precipitacions}</p>
+                <p><strong>Temperatures:</strong> ${data[0].versio.variables.temperatures}</p>
+                <p><strong>Visibilitat:</strong> ${data[0].versio.variables.visibilitat}</p>
+                <p><strong>Vent:</strong> ${data[0].versio.variables.vent}</p>
+            `;
+        })
+        .catch(error => {
+            document.getElementById("output").innerHTML = "Error al carregar les dades.";
+            console.error("Error carregant JSON:", error);
+        });
+    </script>
+</body>
+</html>
