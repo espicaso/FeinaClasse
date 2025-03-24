@@ -35,14 +35,18 @@
         fetch("sdadesobertes_pg.json")
         .then(response => response.json())
         .then(data => {
-            document.getElementById("output").innerHTML = `
+
+            data.forEach(data => {
+                output +=`
                 <h2>Dades Previsió Meteorològica</h2>
-                <p><strong>Estat del cel:</strong> ${data[0].versio.variables.estatDelCel}</p>
-                <p><strong>Precipitacions:</strong> ${data[0].versio.variables.precipitacions}</p>
-                <p><strong>Temperatures:</strong> ${data[0].versio.variables.temperatures}</p>
-                <p><strong>Visibilitat:</strong> ${data[0].versio.variables.visibilitat}</p>
-                <p><strong>Vent:</strong> ${data[0].versio.variables.vent}</p>
-            `;
+                <p><strong>Estat del cel:</strong> ${data.versio.variables.estatDelCel}</p>
+                <p><strong>Precipitacions:</strong> ${data.versio.variables.precipitacions}</p>
+                <p><strong>Temperatures:</strong> ${data.versio.variables.temperatures}</p>
+                <p><strong>Visibilitat:</strong> ${data.versio.variables.visibilitat}</p>
+                <p><strong>Vent:</strong> ${data.versio.variables.vent}</p>
+           `;
+            });
+            document.getElementById("output").innerHTML = output;
         })
         .catch(error => {
             document.getElementById("output").innerHTML = "Error al carregar les dades.";
