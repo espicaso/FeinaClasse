@@ -12,18 +12,18 @@
             padding: 20px;
         }
         #output {
-            background: white;
+            background: rgb(188, 228, 226);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
             display: inline-block;
             text-align: left;
         }
         h1 {
-            color: #0073e6;
+            color: #00e6ad;
         }
         h2 {
-            color: #005bb5;
+            color: #00b5b5;
         }
     </style>
 </head>
@@ -32,26 +32,31 @@
     <div id="output">Carregant dades...</div>
     
     <script>
-        fetch("sdadesobertes_pg.json")
-        .then(response => response.json())
-        .then(data => {
+        fetch("dadesobertes_pg.json")
+            .then(response => response.json())
+            .then(data => {
+                let output = "<h2>Predicció</h2>";
+                
+                data.forEach(prediccio => {
+                    output += `
+                        <div class="forecast">
+                            "<h3>Previsio Meteorològica del dia</h3>"
+                            <p><strong>Estat del Cel:</strong> ${prediccio.versio.variables.estatDelCel}</p>
+                            <p><strong>Precipitacions:</strong> ${prediccio.versio.variables.precipitacions}</p>
+                            <p><strong>Temperatures:</strong> ${prediccio.versio.variables.temperatures}</p>
+                            <p><strong>Visibilitat:</strong> ${prediccio.versio.variables.visibilitat}</p>
+                            <p><strong>Vent:</strong> ${prediccio.versio.variables.vent}</p>
+                        </div>
+                    `;
+                });
 
-            data.forEach(data => {
-                output +=`
-                <h2>Dades Previsió Meteorològica</h2>
-                <p><strong>Estat del cel:</strong> ${data.versio.variables.estatDelCel}</p>
-                <p><strong>Precipitacions:</strong> ${data.versio.variables.precipitacions}</p>
-                <p><strong>Temperatures:</strong> ${data.versio.variables.temperatures}</p>
-                <p><strong>Visibilitat:</strong> ${data.versio.variables.visibilitat}</p>
-                <p><strong>Vent:</strong> ${data.versio.variables.vent}</p>
-           `;
+                document.getElementById("output").innerHTML = output;
+            })
+            .catch(error => {
+                document.getElementById("output").innerHTML = "Error al carregar les dades.";
+                console.error("Error carregant JSON:", error);
             });
-            document.getElementById("output").innerHTML = output;
-        })
-        .catch(error => {
-            document.getElementById("output").innerHTML = "Error al carregar les dades.";
-            console.error("Error carregant JSON:", error);
-        });
     </script>
 </body>
 </html>
+
